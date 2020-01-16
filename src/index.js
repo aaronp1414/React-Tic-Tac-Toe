@@ -51,6 +51,7 @@ class Board extends React.Component {
         } else {
             status = 'Next player: ' + (this.state.xTurn ? 'X' : 'O');
         }
+
         return (
             <div>
                 <div className="status">{status}</div>
@@ -75,11 +76,25 @@ class Board extends React.Component {
 }
 
 class Game extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            localPlay: true
+        }
+    }
+
     render() {
+        let playMode = this.state.localPlay ? 'AI Mode' : 'Local Mode';
+
         return (
             <div className="game">
                 <div className="game-board">
                     <Board />
+                </div>
+                <div className="mode-button">
+                    <button onClick={() => this.setState({
+                        localPlay: !this.state.localPlay,
+                    })}>Switch to {playMode}</button>
                 </div>
             </div>
         );
