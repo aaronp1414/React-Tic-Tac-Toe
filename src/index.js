@@ -21,6 +21,13 @@ class Board extends React.Component {
         }
     }
 
+    resetGame(){
+        this.setState({
+            squares: Array(9).fill(null),
+            xTurn: true,
+        })
+    }
+
     handleClick(i) {
         const squares = this.state.squares.slice();
         if (calculateWinner(squares) || squares[i]) {
@@ -78,6 +85,7 @@ class Board extends React.Component {
 class Game extends React.Component {
     constructor(props) {
         super(props);
+        this.boardElement = React.createRef();
         this.state = {
             localPlay: true
         }
@@ -89,12 +97,15 @@ class Game extends React.Component {
         return (
             <div className="game">
                 <div className="game-board">
-                    <Board />
+                    <Board ref={this.boardElement}/>
                 </div>
                 <div className="mode-button">
                     <button onClick={() => this.setState({
                         localPlay: !this.state.localPlay,
                     })}>Switch to {playMode}</button>
+                </div>
+                <div className="mode-button">
+                    <button onClick={() => this.boardElement.current.resetGame()}>Reset</button>
                 </div>
             </div>
         );
