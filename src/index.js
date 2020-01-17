@@ -4,7 +4,7 @@ import './index.css';
 
 function Square(props) {
     return (
-        <button className="square"
+        <button className={props.isWinning ? "winning-square" : "square"}
                 onClick={props.onClick}
         >
             {props.value}
@@ -12,56 +12,22 @@ function Square(props) {
     );
 }
 
+
+
 class Board extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            squares: Array(9).fill(null),
-            xTurn: true,
-        }
-    }
-
-    resetGame(){
-        this.setState({
-            squares: Array(9).fill(null),
-            xTurn: true,
-        })
-    }
-
-    handleClick(i) {
-        const squares = this.state.squares.slice();
-        if (calculateWinner(squares) || squares[i]) {
-            return;
-        }
-        squares[i] = this.state.xTurn ? 'X' : 'O';
-        this.setState({
-            squares: squares,
-            xTurn: !this.state.xTurn
-        });
-    }
-
     renderSquare(i) {
         return (
             <Square
-                value={this.state.squares[i]}
-                onClick={() => this.handleClick(i)}
+                isWinning={this.props.winningSquares ? this.props.winningSquares.includes(i): null}
+                value={this.props.squares[i]}
+                onClick={() => this.props.handleClick(i)}
             />
         );
     }
 
     render() {
-        const winner = calculateWinner(this.state.squares);
-        let status;
-        if (winner) {
-            status = 'Winner: ' + winner;
-
-        } else {
-            status = 'Next player: ' + (this.state.xTurn ? 'X' : 'O');
-        }
-
         return (
             <div>
-                <div className="status">{status}</div>
                 <div className="board-row">
                     {this.renderSquare(0)}
                     {this.renderSquare(1)}
@@ -87,25 +53,67 @@ class Game extends React.Component {
         super(props);
         this.boardElement = React.createRef();
         this.state = {
-            localPlay: true
+            localPlay: true,
+            squares: Array(9).fill(null),
+            xTurn: true,
+        };
+
+    }
+
+    resetGame(){
+        this.setState({
+            squares: Array(9).fill(null),
+            xTurn: true,
+        })
+    }
+
+    switchGameMode(){
+        this.setState({
+            localPlay: !this.state.localPlay,
+        });
+        this.resetGame();
+    }
+
+    handleClick(i) {
+        let squares = this.state.squares.slice();
+        if (calculateWinner(squares) || squares[i]) {
+            return;
         }
+        squares[i] = this.state.xTurn ? 'X' : 'O';
+        this.setState({
+            squares: squares,
+            xTurn: !this.state.xTurn
+        });
     }
 
     render() {
         let playMode = this.state.localPlay ? 'AI Mode' : 'Local Mode';
 
+        const winner = calculateWinner(this.state.squares);
+        let status;
+        if (winner) {
+            status = 'Winner: ' + winner[0];
+        } else {
+            status = 'Next player: ' + (this.state.xTurn ? 'X' : 'O') +
+                (this.props.isLocalPlay ? '' : (this.state.xTurn ? ' (You)' : ' (AI)'));
+        }
+
         return (
             <div className="game">
+                <div className="status">{status}</div>
                 <div className="game-board">
-                    <Board ref={this.boardElement}/>
+                    <Board ref={this.boardElement}
+                           isLocalPlay={this.state.localPlay}
+                           squares={this.state.squares}
+                           winningSquares={winner ? winner[1] : null }
+                    handleClick={i => this.handleClick(i)}
+                    />
                 </div>
                 <div className="mode-button">
-                    <button onClick={() => this.setState({
-                        localPlay: !this.state.localPlay,
-                    })}>Switch to {playMode}</button>
+                    <button onClick={() => this.switchGameMode()}>Switch to {playMode}</button>
                 </div>
                 <div className="mode-button">
-                    <button onClick={() => this.boardElement.current.resetGame()}>Reset</button>
+                    <button onClick={() => this.resetGame()}>Reset</button>
                 </div>
             </div>
         );
@@ -131,7 +139,7 @@ function calculateWinner(squares) {
     for (let i = 0; i < lines.length; i++) {
         const [a, b, c] = lines[i];
         if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-            return squares[a];
+            return [squares[a], lines[i]];
         }
     }
     return null;

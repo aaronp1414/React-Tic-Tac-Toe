@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f86f1e16-a314-4033-95ac-2800c7240927" name="Default Changelist" comment="Button to change play mode">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="f86f1e16-a314-4033-95ac-2800c7240927" name="Default Changelist" comment="Button to reset the game">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,7 +51,9 @@
       <option name="presentableId" value="Default" />
       <updated>1579126377356</updated>
       <workItem from="1579126380990" duration="2904000" />
-      <workItem from="1579130986520" duration="10132000" />
+      <workItem from="1579130986520" duration="11202000" />
+      <workItem from="1579211407760" duration="1149000" />
+      <workItem from="1579213250415" duration="13063000" />
     </task>
     <task id="LOCAL-00001" summary="Button to change play mode">
       <created>1579169657121</created>
@@ -61,7 +62,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579169657121</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Button to reset the game">
+      <created>1579171056322</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1579171056322</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -69,17 +77,22 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Button to change play mode" />
-    <option name="LAST_COMMIT_MESSAGE" value="Button to change play mode" />
+    <MESSAGE value="Button to reset the game" />
+    <option name="LAST_COMMIT_MESSAGE" value="Button to reset the game" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="788" y="220" key="CommitChangelistDialog2" timestamp="1579169676703">
+    <state x="914" y="154" key="CommitChangelistDialog2" timestamp="1579171238186">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="788" y="220" key="CommitChangelistDialog2/0.0.2560.1400/2560.193.1920.1040@0.0.2560.1400" timestamp="1579169676703" />
-    <state x="1218" y="365" key="Vcs.Push.Dialog.v2" timestamp="1579169684001">
+    <state x="914" y="154" key="CommitChangelistDialog2/0.0.2560.1400/2560.193.1920.1040@0.0.2560.1400" timestamp="1579171238186" />
+    <state x="1437" y="254" key="RollbackChangesDialog" timestamp="1579171214108">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1218" y="365" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.193.1920.1040@0.0.2560.1400" timestamp="1579169684001" />
+    <state x="1437" y="254" key="RollbackChangesDialog/0.0.2560.1400/2560.193.1920.1040@0.0.2560.1400" timestamp="1579171214108" />
+    <state x="1218" y="365" key="Vcs.Push.Dialog.v2" timestamp="1579171266286">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1218" y="365" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.193.1920.1040@0.0.2560.1400" timestamp="1579171266286" />
     <state x="891" y="444" key="git4idea.merge.GitPullDialog" timestamp="1579126249442">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
