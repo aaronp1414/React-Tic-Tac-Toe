@@ -14,7 +14,8 @@ ol, ul {
 }
 
 .status {
-    margin-bottom: 10px;
+    font-size: 24px;
+    margin: 0 auto 10px;
 }
 
 .square {
@@ -24,12 +25,12 @@ ol, ul {
     font-size: 24px;
     font-weight: bold;
     line-height: 34px;
-    height: 34px;
+    height: 50px;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
     text-align: center;
-    width: 34px;
+    width: 50px;
 }
 
 .winning-square {
@@ -39,12 +40,12 @@ ol, ul {
     font-size: 24px;
     font-weight: bold;
     line-height: 34px;
-    height: 34px;
+    height: 50px;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
     text-align: center;
-    width: 34px;
+    width: 50px;
 }
 
 .square:focus {

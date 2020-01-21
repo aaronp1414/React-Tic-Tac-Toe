@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import Button from '@material-ui/core/Button';
+import 'typeface-roboto';
 
 function Square(props) {
     return (
@@ -11,8 +13,6 @@ function Square(props) {
         </button>
     );
 }
-
-
 
 class Board extends React.Component {
     renderSquare(i) {
@@ -53,7 +53,7 @@ class Game extends React.Component {
         super(props);
         this.boardElement = React.createRef();
         this.state = {
-            localPlay: true,
+            isLocalPlay: true,
             squares: Array(9).fill(null),
             xTurn: true,
         };
@@ -69,7 +69,7 @@ class Game extends React.Component {
 
     switchGameMode(){
         this.setState({
-            localPlay: !this.state.localPlay,
+            isLocalPlay: !this.state.isLocalPlay,
         });
         this.resetGame();
     }
@@ -79,7 +79,7 @@ class Game extends React.Component {
         if (calculateWinner(squares) || squares[i]) {
             return;
         }
-        squares[i] = this.state.xTurn ? 'X' : 'O';
+        squares[i] = (this.state.xTurn ? 'X' : 'O');
         this.setState({
             squares: squares,
             xTurn: !this.state.xTurn
@@ -87,7 +87,7 @@ class Game extends React.Component {
     }
 
     render() {
-        let playMode = this.state.localPlay ? 'AI Mode' : 'Local Mode';
+        let playMode = this.state.isLocalPlay ? 'AI Mode' : 'Local Mode';
 
         const winner = calculateWinner(this.state.squares);
         let status;
@@ -95,7 +95,7 @@ class Game extends React.Component {
             status = 'Winner: ' + winner[0];
         } else {
             status = 'Next player: ' + (this.state.xTurn ? 'X' : 'O') +
-                (this.props.isLocalPlay ? '' : (this.state.xTurn ? ' (You)' : ' (AI)'));
+                (this.state.isLocalPlay ? '' : (this.state.xTurn ? ' (You)' : ' (AI)'));
         }
 
         return (
@@ -103,20 +103,20 @@ class Game extends React.Component {
                 <div className="status">{status}</div>
                 <div className="game-board">
                     <Board ref={this.boardElement}
-                           isLocalPlay={this.state.localPlay}
                            squares={this.state.squares}
                            winningSquares={winner ? winner[1] : null }
                     handleClick={i => this.handleClick(i)}
                     />
                 </div>
                 <div className="mode-button">
-                    <button onClick={() => this.switchGameMode()}>Switch to {playMode}</button>
+                    <Button variant="contained" color="primary"
+                            onClick={() => this.switchGameMode()}>Switch to {playMode}</Button>
                 </div>
                 <div className="mode-button">
-                    <button onClick={() => this.resetGame()}>Reset</button>
+                    <Button variant="contained" color="secondary" onClick={() => this.resetGame()}>Reset</Button>
                 </div>
             </div>
-        );
+        )
     }
 }
 
