@@ -1,5 +1,5 @@
 body {
-    font: 14px "Century Gothic", Futura, sans-serif;
+    font: 14px "Roboto", Futura, sans-serif;
     margin: 20px;
 }
 
@@ -14,7 +14,7 @@ ol, ul {
 }
 
 .status {
-    font-size: 24px;
+    font: 24px "Roboto";
     margin: 0 auto 10px;
 }
 
@@ -48,12 +48,12 @@ ol, ul {
     width: 50px;
 }
 
-.square:focus {
+.square:hover {
     outline: none;
+    background: #ddd;
 }
 
-
-.kbd-navigation .square:focus {
+.kbd-navigation .square:hover {
     background: #ddd;
 }
 
@@ -69,6 +69,7 @@ ol, ul {
 .game-info {
     margin-left: 20px;
 }
-.mode-button {
-    margin: 0 auto;
+
+.button {
+    margin: 2px auto 0;
 }
