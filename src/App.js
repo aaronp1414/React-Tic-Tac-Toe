@@ -6,7 +6,7 @@ import Game from "./components/Game";
 const theme = createMuiTheme({
     typography: {
         fontFamily: 'roboto',
-        fontSize:'16',
+        fontSize: 16,
         button: {
             textTransform: 'none'
         }

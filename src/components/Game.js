@@ -10,6 +10,7 @@ class Game extends React.Component {
             isLocalPlay: true,
             squares: Array(9).fill(null),
             xTurn: true,
+            playDisabled: false,
         };
 
     }
@@ -18,6 +19,7 @@ class Game extends React.Component {
         this.setState({
             squares: Array(9).fill(null),
             xTurn: true,
+            playDisabled: false
         })
     }
 
@@ -28,16 +30,38 @@ class Game extends React.Component {
         this.resetGame();
     }
 
-    handleClick(i) {
+    disablePlay() {
+        this.setState({playDisabled: true});
+    }
+
+    enablePlay() {
+        this.setState({playDisabled: false});
+    }
+
+    makeMove(moveLocation){
         let squares = this.state.squares.slice();
-        if (calculateWinner(squares) || squares[i]) {
-            return;
-        }
-        squares[i] = (this.state.xTurn ? 'X' : 'O');
+        squares[moveLocation] = (this.state.xTurn ? 'X' : 'O');
         this.setState({
             squares: squares,
             xTurn: !this.state.xTurn
         });
+    }
+
+    handleClick(i) {
+        let squares = this.state.squares.slice();
+        if (calculateWinner(squares) || squares[i] || this.state.playDisabled) {
+            return;
+        }
+
+        this.makeMove(i);
+        if(!this.state.isLocalPlay) {
+            this.disablePlay();
+            setTimeout(() => {
+                let move = aiTurn(this.state.squares);
+                this.makeMove(move);
+                this.enablePlay();
+            })
+        }
     }
 
     render() {
@@ -92,6 +116,34 @@ function calculateWinner(squares) {
         }
     }
     return null;
+}
+
+function aiTurn(squares) {
+    if(calculateWinner(squares)){
+        return
+    }
+
+    let available = [];
+    for (let i = 0; i < squares.length; i++) {
+        if(squares[i] == null){
+            available.push(i)
+        }
+    }
+    return available[Math.floor(Math.random()*available.length)];
+}
+
+function randomMove(squares) {
+    if(calculateWinner(squares)){
+        return
+    }
+
+    let available = [];
+    for (let i = 0; i < squares.length; i++) {
+        if(squares[i] == null){
+            available.push(i)
+        }
+    }
+    return available[Math.floor(Math.random()*available.length)];
 }
 
 export default Game;
