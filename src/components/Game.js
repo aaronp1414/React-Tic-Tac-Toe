@@ -57,10 +57,10 @@ class Game extends React.Component {
         if(!this.state.isLocalPlay) {
             this.disablePlay();
             setTimeout(() => {
-                let move = aiTurn(this.state.squares);
+                let move = minimaxMove(this.state.squares);
                 this.makeMove(move);
                 this.enablePlay();
-            })
+            }, 400)
         }
     }
 
@@ -70,7 +70,7 @@ class Game extends React.Component {
         const winner = calculateWinner(this.state.squares);
         let status;
         if (winner) {
-            status = 'Winner: ' + winner[0];
+            status = (winner[0] === 'tie' ? 'It is a Tie!' :  'Winner: ' + winner[0]);
         } else {
             status = 'Next player: ' + (this.state.xTurn ? 'X' : 'O') +
                 (this.state.isLocalPlay ? '' : (this.state.xTurn ? ' (You)' : ' (AI)'));
@@ -115,21 +115,71 @@ function calculateWinner(squares) {
             return [squares[a], lines[i]];
         }
     }
-    return null;
+    if(squares.some((val) => {return val === null;})) {
+        return null
+    } else {
+        return ['tie', null]
+    }
 }
 
-function aiTurn(squares) {
+
+function minimaxMove(squares) {
     if(calculateWinner(squares)){
         return
     }
 
-    let available = [];
+    let maxScore = -Infinity;
+    let move;
+    let boardState = squares.slice();
     for (let i = 0; i < squares.length; i++) {
-        if(squares[i] == null){
-            available.push(i)
+        if(boardState[i] === null){
+            boardState[i] = 'O'; //make ai move
+            let score = minimax(boardState, 0, false);
+            boardState[i] = null; //undo the move made before minimax call
+            if(score > maxScore){
+                maxScore = score;
+                move = i;
+            }
         }
     }
-    return available[Math.floor(Math.random()*available.length)];
+    return move;
+}
+
+function minimax(boardState, depth, isMaximizing) {
+    let scores = {
+        X: -1,
+        O: 1,
+        tie: 0
+    };
+
+    let winnerResult = calculateWinner(boardState);
+    if(winnerResult !== null){
+        return scores[winnerResult[0]];
+    }
+
+    if (isMaximizing){
+        let maxScore = -Infinity;
+        for (let i = 0; i < boardState.length; i++){
+            if(boardState[i] === null){
+                boardState[i] = 'O';
+                let score = minimax(boardState, depth + 1, false);
+                boardState[i] = null;
+                maxScore = Math.max(score, maxScore);
+            }
+        }
+        return maxScore;
+    } else {
+        let maxScore = Infinity;
+        for (let i = 0; i < boardState.length; i++){
+            if(boardState[i] === null){
+                boardState[i] = 'X';
+                let score = minimax(boardState, depth + 1, true);
+                boardState[i] = null;
+                maxScore = Math.min(score, maxScore);
+            }
+        }
+        return maxScore;
+    }
 }
 
 function randomMove(squares) {
